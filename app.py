@@ -2,7 +2,6 @@ from datetime import datetime
 from flask import Flask, render_template, request, redirect, session, flash, url_for
 import re
 #
-from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 #encriptacion para las contrasenas
 from flask_bcrypt import Bcrypt
