@@ -18,17 +18,17 @@ from utils import login_required
 EMAIL_REGEX = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
 
 
+import os
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.secret_key = "secretkey"
 
-load_dotenv()  # Si usas un archivo .env
+# Configurar la URI de la base de datos (ajusta según corresponda)
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "mysql+pymysql://usuario:contraseña@localhost/nombre_bd")
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-
-# Si usas SQLAlchemy
-SQLALCHEMY_DATABASE_URI = DATABASE_URL.replace("mysql://", "mysql+pymysql://")
-SQLALCHEMY_TRACK_MODIFICATIONS = False
+db = SQLAlchemy()
+db.init_app(app)
 
 
 db.init_app(app)
