@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 80%;">
+    <h2>Bienvenido, {{ username }}!</h2>
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Director</th>
+            <th scope="col">Estreno</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for pelicula in peliculas %}
+          <tr>
+            <th scope="row">{{pelicula.titulo}}</th>
+            <td>{{pelicula.director}}</td>
+            <td>{{pelicula.fecha_estreno}}</td>
+            <td>
+              
+              <a href="{{ url_for('detalle_pelicula', id=pelicula.id) }}" class="btn btn-info btn-sm">Ver</a>
+              {% if pelicula.created_by == user_id %}
+          
+                  <a href="{{ url_for('editar_pelicula', id=pelicula.id) }}" class="btn btn-warning btn-sm">Editar</a>
+                  
+                  <form action="{{ url_for('eliminar_pelicula', id=pelicula.id) }}" method="POST" style="display:inline;">
+                      <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que deseas eliminar esta película?')">Eliminar</button>
+                  </form>
+              {% endif %}
+          </td>
+          {% endfor %}
+         
+        </tbody>
+      </table>
+
+    <a href="{{ url_for('agregar_pelicula') }}" class="btn btn-primary">Agregar pelicula</a>
+    
+
+</div>
+{% endblock %}

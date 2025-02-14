@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container-sm" style="max-width: 600px; text-align: center;">
+        <h2>Agregar Película</h2>
+        <form method="POST">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="tituloInput" placeholder="Título" name="titulo" required>
+                <label for="tituloInput">Título</label>
+                <p class="error">{{ errores.get('titulo', '') }}</p>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="directorInput" placeholder="Director" name="director" required>
+                <label for="directorInput">Director</label>
+                <p class="error">{{ errores.get('director', '') }}</p>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="date" class="form-control" id="fechaInput" name="fecha_estreno" required>
+                <label for="fechaInput">Fecha de Estreno</label>
+                <p class="error">{{ errores.get('fecha_estreno', '') }}</p>
+            </div>
+
+            <div class="form-floating mb-3">
+                <textarea class="form-control" id="sinopsisInput" placeholder="Sinopsis" name="sinopsis" style="height: 100px;" required></textarea>
+                <label for="sinopsisInput">Sinopsis</label>
+                <p class="error">{{ errores.get('sinopsis', '') }}</p>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 2rem;">Agregar Película</button>
+        </form>
+        <a class="btn btn-danger mt-3" href="{{ url_for('cine') }}">Volver a la lista</a>
+    </div>
+{% endblock %}

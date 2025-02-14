@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}{{ pelicula.titulo }}{% endblock %}
+
+{% block content %}
+    <div class="container mb-3" style="max-width: 80%;">
+        <div class="card" style="width: 100%;">
+            <div class="card-body">
+              <h5 class="card-title">{{ pelicula.titulo }}</h5>
+              <p class="card-text"><strong>Estreno:</strong>{{ pelicula.fecha_estreno }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><strong>Director:</strong>{{ pelicula.director }}</li>
+              <li class="list-group-item"><strong>Sinopsis:</strong>{{ pelicula.sinopsis }}</li>
+              <li class="list-group-item"><strong>Creado por:</strong>{{ creador.nombre }} {{ creador.apellido }}</li>
+            </ul>
+        </div>
+        <a class="btn btn-danger mt-3" href="{{ url_for('cine') }}">Volver a la lista</a>
+
+        {% if pelicula.created_by == session['user_id'] %}
+            <a class="btn btn-primary" href="{{ url_for('editar_pelicula', id=pelicula.id) }}">✏️ Editar</a>
+            <form action="{{ url_for('eliminar_pelicula', id=pelicula.id) }}" method="POST" style="display:inline;">
+                <button class="btn btn-danger" type="submit" onclick="return confirm('¿Seguro que quieres eliminar esta película?')">Eliminar</button>
+            </form>
+        {% endif %}
+        <hr>
+        <h3>Comentarios</h3>
+
+        {% if session['user_id'] != pelicula.created_by %}
+            <form method="POST">
+                <textarea name="contenido" required placeholder="Escribe un comentario..." style="width: 100%;"></textarea><br>
+                <button class="btn btn-primary" type="submit">Comentar</button>
+            </form>
+        {% else %}
+            <p><i>No puedes comentar en tu propia película.</i></p>
+        {% endif %}
+    
+
+
+
+        <ul>
+            {% for comentario in comentarios %}
+                <li>
+                    <strong>{{ comentario.usuario.nombre }} {{ comentario.usuario.apellido }}</strong> 
+                    <small>({{ comentario.fecha.strftime('%d/%m/%Y %H:%M') }})</small>
+                    <p>{{ comentario.contenido }}</p>
+    
+                    {% if comentario.usuario_id == session['user_id'] %}
+                        <form action="{{ url_for('eliminar_comentario', id=comentario.id) }}" method="POST" style="display:inline;">
+                            <button class="btn btn-danger" type="submit" onclick="return confirm('¿Eliminar comentario?')">🗑️ Eliminar</button>
+                        </form>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+{% endblock %}
