@@ -12,6 +12,8 @@ from dotenv import load_dotenv
 from utils import login_required
 import pymysql
 
+EMAIL_REGEX = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+
 pymysql.install_as_MySQLdb()
 
 app = Flask(__name__)
