@@ -20,7 +20,7 @@ app = Flask(__name__)
 
 # Configurar la URI de la base de datos (ajusta según corresponda)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "mysql+pymysql://usuario:contraseña@localhost/nombre_bd")
-
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "clave_por_defecto")
 db.init_app(app)  # Solo una vez
 bcrypt = Bcrypt(app)
 migrate = Migrate(app, db)
