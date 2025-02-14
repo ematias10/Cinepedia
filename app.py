@@ -1,38 +1,26 @@
 from datetime import datetime
 from flask import Flask, render_template, request, redirect, session, flash, url_for
 import re
-#
 from flask_migrate import Migrate
-#encriptacion para las contrasenas
 from flask_bcrypt import Bcrypt
-
-from models import db
+from models import db  # Asegúrate de que en models/__init__.py ya exista db = SQLAlchemy()
 from models.pelicula import Pelicula
 from models.usuario import Usuario
 from models.comentario import Comentario
 import os
 from dotenv import load_dotenv
 from utils import login_required
-
-EMAIL_REGEX = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
-
 import pymysql
+
 pymysql.install_as_MySQLdb()
-import os
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
 # Configurar la URI de la base de datos (ajusta según corresponda)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "mysql+pymysql://usuario:contraseña@localhost/nombre_bd")
 
-db.init_app(app)
-
-
-db.init_app(app)
+db.init_app(app)  # Solo una vez
 bcrypt = Bcrypt(app)
-
 migrate = Migrate(app, db)
 
 with app.app_context():
