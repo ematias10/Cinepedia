@@ -17,7 +17,8 @@ from utils import login_required
 
 EMAIL_REGEX = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
 
-
+import pymysql
+pymysql.install_as_MySQLdb()
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
