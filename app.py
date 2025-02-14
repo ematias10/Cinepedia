@@ -11,7 +11,8 @@ from models import db
 from models.pelicula import Pelicula
 from models.usuario import Usuario
 from models.comentario import Comentario
-
+import os
+from dotenv import load_dotenv
 from utils import login_required
 
 EMAIL_REGEX = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
@@ -21,8 +22,14 @@ EMAIL_REGEX = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
 app = Flask(__name__)
 app.secret_key = "secretkey"
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:2022@localhost/cinepedia'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+load_dotenv()  # Si usas un archivo .env
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+# Si usas SQLAlchemy
+SQLALCHEMY_DATABASE_URI = DATABASE_URL.replace("mysql://", "mysql+pymysql://")
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+
 
 db.init_app(app)
 bcrypt = Bcrypt(app)
