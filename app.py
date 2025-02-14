@@ -28,7 +28,6 @@ app = Flask(__name__)
 # Configurar la URI de la base de datos (ajusta según corresponda)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "mysql+pymysql://usuario:contraseña@localhost/nombre_bd")
 
-db = SQLAlchemy()
 db.init_app(app)
 
 
